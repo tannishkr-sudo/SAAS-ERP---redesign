@@ -1,0 +1,25 @@
+# Dependencies and Next.js build output
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs, test output, and local tooling
+*.log
+coverage/
+.vercel/
+.DS_Store
+Thumbs.db
+
+# Credentials
+*.pem
+
+# Local Prisma artifacts
+prisma/*.db
+prisma/*.db-journal

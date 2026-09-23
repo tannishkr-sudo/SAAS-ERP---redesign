@@ -1,0 +1,2 @@
+import { BlueprintSchema, type Blueprint } from "@/lib/erp/types";
+export function validateBlueprint(value:unknown):Blueprint { const blueprint=BlueprintSchema.parse(value); const ids=new Set<string>(); for(const erpModule of blueprint.modules){if(ids.has(erpModule.id))throw new Error(`Duplicate module: ${erpModule.id}`);ids.add(erpModule.id);const entities=new Set<string>();for(const entity of erpModule.entities){if(entities.has(entity.name))throw new Error(`Duplicate entity: ${entity.name}`);entities.add(entity.name)}} return blueprint; }

@@ -1,0 +1,10 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+// Platform tables are fixed; tenant ERP data is generated as validated metadata,
+// then stored in the controlled Record JSON envelope rather than arbitrary SQL.
+model Organization { id String @id @default(cuid()) name String createdAt DateTime @default(now()) memberships Membership[] erps ErpInstance[] }
+model User { id String @id @default(cuid()) email String @unique name String? memberships Membership[] }
+model Membership { id String @id @default(cuid()) userId String organizationId String roleId String user User @relation(fields:[userId],references:[id]) organization Organization @relation(fields:[organizationId],references:[id]) @@unique([userId,organizationId]) }
+model ErpInstance { id String @id @default(cuid()) organizationId String blueprint Json version Int @default(1) organization Organization @relation(fields:[organizationId],references:[id]) records ErpRecord[] }
+model ErpRecord { id String @id @default(cuid()) erpId String entityKey String data Json createdAt DateTime @default(now()) updatedAt DateTime @updatedAt erp ErpInstance @relation(fields:[erpId],references:[id]) @@index([erpId,entityKey]) }
