@@ -1,4 +1,23 @@
 import "./globals.css";
 import type { Metadata } from "next";
-export const metadata: Metadata = { title: "ERPForge AI", description: "Describe your business. Get your ERP." };
-export default function RootLayout({children}:{children:React.ReactNode}) { return <html lang="en"><body>{children}</body></html> }
+import ArcCursor from "@/components/erp/ArcCursor";
+
+export const metadata: Metadata = {
+  title: "ERPForge AI",
+  description: "AI-powered ERP builder",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body>
+        <ArcCursor />
+        {children}
+      </body>
+    </html>
+  );
+}

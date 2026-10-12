@@ -1,0 +1,90 @@
+
+.arc-cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.arc-cursor-dot,
+.arc-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    opacity 180ms ease,
+    width 220ms ease,
+    height 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.arc-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #eaf4ff;
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.8);
+}
+
+.arc-cursor-follower {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(147, 197, 253, 0.65);
+  background: rgba(59, 130, 246, 0.06);
+  box-shadow: 0 0 22px rgba(59, 130, 246, 0.12);
+}
+
+.arc-cursor-dot.arc-cursor-visible,
+.arc-cursor-follower.arc-cursor-visible {
+  opacity: 1;
+}
+
+.arc-cursor-follower.arc-cursor-hover {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(147, 197, 253, 0.95);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.arc-cursor-dot.arc-cursor-clicked {
+  transform-origin: center;
+  background: #60a5fa;
+}
+
+.arc-cursor-follower.arc-cursor-clicked {
+  width: 24px;
+  height: 24px;
+  background: rgba(96, 165, 250, 0.2);
+  border-color: #93c5fd;
+}
+
+/* Hide the native pointer only after the custom cursor initializes. */
+html.arc-cursor-enabled,
+html.arc-cursor-enabled body,
+html.arc-cursor-enabled body * {
+  cursor: none !important;
+}
+
+/* Preserve the text insertion cursor for editable fields. */
+html.arc-cursor-enabled input,
+html.arc-cursor-enabled textarea,
+html.arc-cursor-enabled [contenteditable="true"] {
+  cursor: text !important;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .arc-cursor-layer {
+    display: none;
+  }
+
+  html.arc-cursor-enabled,
+  html.arc-cursor-enabled body,
+  html.arc-cursor-enabled body * {
+    cursor: auto !important;
+  }
+}
